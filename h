@@ -1,12 +1,12 @@
 <html>
 <head>
- <script src="js/geoPosition.js" type="text/javascript" charset="utf-8"></script>
+
 </head>
 <body>
 <p id="location"></p>
 <p id="locat"></p> 
 <h1>hi</h1>
-<script type="text/javascript">
+<script type="text/javascript" charset="utf-8">
   document.getElementById("locat").innerHTML = "xxxxxxxxxxxxxx";
   function getLocation() {
     // Если геолокация поддерживается браузером
