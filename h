@@ -12,11 +12,34 @@
             height: 400px;
         }
     </style>
+<script src="js/geoPosition.js" type="text/javascript" charset="utf-8"></script>
 </head>
 <body>
     <div id="map"></div>
 
-    <script>
+    <script type="text/javascript">
+	if(geoPosition.init()){  // Geolocation Initialisation
+			geoPosition.getCurrentPosition(success_callback,error_callback,{enableHighAccuracy:true});
+	}else{
+			// You cannot use Geolocation in this device
+	}
+	geoPositionSimulator.init(); 
+
+	// p : geolocation object
+	function success_callback(p){
+		// p.latitude : latitude value
+		// p.longitude : longitude value
+	}
+
+	function error_callback(p){
+		// p.message : error message
+	}
+</script>
+        
+        
+        
+        
+        <script>
         // Функция для инициализации карты
         function initMap(latitude, longitude) {
             const myMap = new ymaps.Map("map", {
@@ -50,3 +73,8 @@
     </script>
 </body>
 </html>
+
+
+
+
+
