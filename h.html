@@ -1,28 +1,63 @@
-I'll<html>
+<!DOCTYPE html>
+<html lang="ru">
 <head>
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Геолокация на стриме</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #282c34;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        #location {
+            background-color: rgba(0, 0, 0, 0.8);
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+        }
+    </style>
 </head>
 <body>
-<p id="location"></p>
-<p id="locat"></p> 
-<h1>hi</h1>
-<script type="text/javascript" charset="utf-8">
-  document.getElementById("locat").innerHTML = "xxxxxxxxxxxxxx";
-  function getLocation() {
-    // Если геолокация поддерживается браузером
-    if (geoPosition.init()){ 
-geoPosition.getCurrentPosition(showPosition);
-	}else{	document.getElementById("location").innerHTML = "Геолокация не поддерживается.";
-	}
-  }
+    <div id="location">
+        <h1>Текущая Геолокация</h1>
+        <p id="coordinates">Получение данных...</p>
+    </div>
+    
+    <script>
+        function updateLocation(position) {
+            const latitude = position.coords.latitude;
+            const longitude = position.coords.longitude;
+            document.getElementById("coordinates").textContent = `Широта: ${latitude.toFixed(4)}, Долгота: ${longitude.toFixed(4)}`;
+        }
 
-  function showPosition(position) {
-    var lat = position.coords.latitude;
-    var lon = position.coords.longitude;
-    document.getElementById("location").innerHTML = "Широта: " + lat + "<br>Долгота: " + lon;
-  }
-getLocation();
-<span style='color: #ffffff;'><% gps_place(address, ru) %></span>
-</script>
+        function showError(error) {
+            switch(error.code) {
+                case error.PERMISSION_DENIED:
+                    document.getElementById("coordinates").textContent = "Ошибка: Пользователь отклонил запрос на геолокацию.";
+                    break;
+                case error.POSITION_UNAVAILABLE:
+                    document.getElementById("coordinates").textContent = "Ошибка: Информация о местоположении недоступна.";
+                    break;
+                case error.TIMEOUT:
+                    document.getElementById("coordinates").textContent = "Ошибка: Время запроса истекло.";
+                    break;
+                case error.UNKNOWN_ERROR:
+                    document.getElementById("coordinates").textContent = "Неизвестная ошибка.";
+                    break;
+            }
+        }
+
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(updateLocation, showError);
+        } else {
+            document.getElementById("coordinates").textContent = "Геолокация не поддерживается этим браузером.";
+        }
+    </script>
 </body>
 </html>
